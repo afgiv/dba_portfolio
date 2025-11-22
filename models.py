@@ -1,8 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     __tablename__ = "users"
     __table_args__ = {"schema": "app"}
 
@@ -22,6 +23,8 @@ class Students(db.Model):
     birthdate = db.Column(db.Date, nullable = False)
     year_level = db.Column(db.Integer, nullable = False)
 
+    user = db.relationship('Users', backref = 'students', uselist = False)
+    courses = db.relationship('Courses', secondary = 'app.student_courses', backref='students')
 
 class Faculty(db.Model):
     __tablename__ = "faculty"
@@ -33,6 +36,9 @@ class Faculty(db.Model):
     birthdate = db.Column(db.Date, nullable = False)
     year_joined = db.Column(db.Integer, nullable = False)
 
+    user = db.relationship('Users', backref = 'faculty', uselist = False)
+    courses_assigned = db.relationship('Courses', secondary = 'app.courses_assigned', backref='faculty')
+
 class Librarian(db.Model):
     __tablename__ = "librarian"
     __table_args__ = {"schema": "app"}
@@ -40,6 +46,8 @@ class Librarian(db.Model):
     lib_id = db.Column(db.String(50), db.ForeignKey('app.users.user_id'), primary_key = True)
     book_id = db.Column(db.Integer, nullable = False)
     book_title= db.Column(db.String(100), nullable = False)
+
+    user = db.relationship('Users', backref = 'librarian', uselist = False)
 
 class Courses(db.Model):
     __tablename__ = "courses"
