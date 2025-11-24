@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS app.librarian (
 	lib_id VARCHAR(50) PRIMARY KEY,
 	book_id INTEGER NOT NULL,
 	book_title VARCHAR(100) NOT NULL,
+	book_author VARCHAR(100) NOT NULL,
 	CONSTRAINT fk_lib_id FOREIGN KEY (lib_id) REFERENCES app.users (user_id)
 );
 

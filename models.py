@@ -12,6 +12,9 @@ class Users(db.Model, UserMixin):
     role = db.Column(db.String(20), nullable = False)
     created_at = db.Column(db.Date, nullable = False)
 
+    def get_id(self):
+        return self.user_id
+
 
 class Students(db.Model):
     __tablename__ = "students"
@@ -46,6 +49,7 @@ class Librarian(db.Model):
     lib_id = db.Column(db.String(50), db.ForeignKey('app.users.user_id'), primary_key = True)
     book_id = db.Column(db.Integer, nullable = False)
     book_title= db.Column(db.String(100), nullable = False)
+    book_author = db.Column(db.String(100), nullable = False)
 
     user = db.relationship('Users', backref = 'librarian', uselist = False)
 

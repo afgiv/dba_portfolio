@@ -3,13 +3,27 @@
 <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center" bis_skin_checked="1">
     <div class="list-group" bis_skin_checked="1">
         <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            {% if dashboard == 'my_courses' %}
             <div class="d-flex gap-2 w-100 justify-content-between" bis_skin_checked="1">
+                {% for course in courses %}
                 <div bis_skin_checked="1">
-                    <h6 class="mb-0">Course title</h6>
-                    <p class="mb-0 opacity-75">Teacher</p>
+                    <h6 class="mb-0">{{ course.course_title }}</h6>
+                    <p class="mb-0 opacity-75">{{ course.enrolled_at }}</p>
                 </div>
-                <small class="opacity-50 text-nowrap">Units</small> 
+                <small class="opacity-50 text-nowrap">{{ course.course_units }} units</small>
+                {% endfor %}
             </div>
+            {% elif dashboard == 'books' %}
+            <div class="d-flex gap-2 w-100 justify-content-between" bis_skin_checked="1">
+                {% for book in books %}
+                <div bis_skin_checked="1">
+                    <h6 class="mb-0">{{ book.book_title }}</h6>
+                    <p class="mb-0 opacity-75">{{ book.book_author }}</p>
+                </div>
+                <small class="opacity-50 text-nowrap">Book ID: {{ book.book_id }}</small>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

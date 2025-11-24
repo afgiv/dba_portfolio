@@ -12,6 +12,14 @@ app.config.from_object(Config)
 # Initialize the database
 db.init_app(app)
 
+# Initialize the Flask login
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(user_id)
+
 # Render the login page
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -32,8 +40,6 @@ def login():
         else:
             # If the login is successful, login the user depending on their role
             login_user(user)
-            session['role'] = user.role
-            print('eyy')
             return redirect(url_for('dashboard'))
 
     return render_template('login.html')
@@ -44,7 +50,6 @@ def login():
 @login_required
 def dashboard():
     role = current_user.role
-    print(current_user.user_id)
     if role == 'student':
         return redirect(url_for('student_dashboard'))
     elif role == 'faculty':
@@ -58,11 +63,43 @@ def dashboard():
         return redirect(url_for('login'))
 
 
-@app.route("/student_dashboard/" , methods = ['GET'])
+@app.route("/student_dashboard/my_courses" , methods = ['GET'])
 @login_required
 def student_dashboard():
-    return render_template('index.html')
+    student_id = current_user.user_id
+    my_courses = db.session.query(Courses.course_title,
+                                  Courses.course_units,
+                                  Student_Course.enrolled_at).join(Student_Course, 
+                                                                   Courses.course_id == Student_Course.course_id).filter(Student_Course.student_id == student_id).all()
+    return render_template('index.html', page="student", dashboard="my_courses", courses=my_courses)
 
+@app.route("/faculty_dashboard/my_courses" , methods = ['GET'])
+@login_required
+def faculty_dashboard():
+    faculty_id = current_user.user_id
+    my_courses = db.session.query(Courses.course_title,
+                                  Courses.course_units,
+                                  ).join(Courses_Assigned, 
+                                        Courses.course_id == Courses_Assigned.course_id).filter(Courses_Assigned.faculty_id == faculty_id).all()
+    return render_template('index.html', page="faculty", dashboard="my_courses", courses=my_courses)
+
+@app.route("/librarian_dashboard/books" , methods = ['GET'])
+@login_required
+def librarian_dashboard():
+    books = db.session.query(Librarian).all()
+    return render_template('index.html', page="librarian", dashboard="books", books=books)
+
+
+@app.route("/admin/" , methods = ['GET'])
+@login_required
+def admin():
+    return render_template('index.html', page="admin")
+
+# Logout the user and return to the login page
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 
 

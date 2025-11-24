@@ -9,23 +9,40 @@
   <body>
     <div class="container" bis_skin_checked="1">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <div class="col-md-3 mb-2 mb-md-0" bis_skin_checked="1">
-            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-                <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-            </a>
-        </div>
+        {% if page == 'student' %}
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2">Features</a></li>
-            <li><a href="#" class="nav-link px-2">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2">About</a></li>
+            <li><a href="{{ url_for('student_dashboard') }}" class="nav-link px-2 link-secondary">My Courses</a></li>
+            <li><a href="#" class="nav-link px-2">Courses</a></li>
         </ul>
         <div class="col-md-3 text-end" bis_skin_checked="1">
-            <button type="button" class="btn btn-primary">Log out</button>
+        <a type="button" class="btn btn-primary" href="{{ url_for('logout') }}">Logout</a>
         </div>
+        {% elif page == 'faculty' %}
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="{{ url_for('faculty_dashboard') }}" class="nav-link px-2 link-secondary">My Courses</a></li>
+            <li><a href="#" class="nav-link px-2">My Students</a></li>
+        </ul>
+        <div class="col-md-3 text-end" bis_skin_checked="1">
+        <a type="button" class="btn btn-primary" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        {% elif page == 'librarian' %}
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="{{ url_for('librarian_dashboard') }}" class="nav-link px-2 link-secondary">Books</a></li>
+            <li><a href="#" class="nav-link px-2">Add a New Book</a></li>
+        </ul>
+        <div class="col-md-3 text-end" bis_skin_checked="1">
+        <a type="button" class="btn btn-primary" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        {% elif page == 'admin' %}
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="#" class="nav-link px-2 link-secondary">Users</a></li>
+            <li><a href="#" class="nav-link px-2">Courses</a></li>
+            <li><a href="#" class="nav-link px-2">Books</a></li>
+        </ul>
+        <div class="col-md-3 text-end" bis_skin_checked="1">
+        <a type="button" class="btn btn-primary" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        {% endif %}
     </header>
 </div>
 
