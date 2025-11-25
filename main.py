@@ -1,13 +1,19 @@
 # Import the necessary packages
-from flask import Flask, request, render_template, flash, url_for, redirect, session
+from flask import Flask, request, render_template, flash, url_for, redirect, abort
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_bootstrap import Bootstrap5
 from werkzeug.security import check_password_hash, generate_password_hash
+from functools import wraps
 from models import db, Users, Students, Faculty, Librarian, Courses, Student_Course, Courses_Assigned
+from forms import NewUser, NewCourse, NewBook
 from config import Config
 
 # Create the Flask app
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# Connect to Bootstrap
+Bootstrap5(app)
 
 # Initialize the database
 db.init_app(app)
@@ -19,6 +25,40 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(user_id)
+
+# Create the required role for each endpoint accessiblity
+def admin_only(f):
+    @wraps(f)
+    def role_access(*args, **kwargs):
+        if current_user.role != 'admin':
+            return abort(403)
+        return f(*args, **kwargs)
+    return role_access
+
+def student_only(f):
+    @wraps(f)
+    def role_access(*args, **kwargs):
+        if current_user.role != 'student':
+            return abort(403)
+        return f(*args, **kwargs)
+    return role_access
+
+def faculty_only(f):
+    @wraps(f)
+    def role_access(*args, **kwargs):
+        if current_user.role != 'faculty':
+            return abort(403)
+        return f(*args, **kwargs)
+    return role_access
+
+def librarian_only(f):
+    @wraps(f)
+    def role_access(*args, **kwargs):
+        if current_user.role != 'librarian':
+            return abort(403)
+        return f(*args, **kwargs)
+    return role_access
+
 
 # Render the login page
 @app.route('/login', methods = ['GET', 'POST'])
@@ -62,38 +102,124 @@ def dashboard():
         flash("Role not recognized", "danger")
         return redirect(url_for('login'))
 
-
+# --------------------------------- STUDENTS --------------------------------- #
+# Render the list of courses the user (student) enrolled to
 @app.route("/student_dashboard/my_courses" , methods = ['GET'])
 @login_required
+@student_only
 def student_dashboard():
     student_id = current_user.user_id
-    my_courses = db.session.query(Courses.course_title,
-                                  Courses.course_units,
-                                  Student_Course.enrolled_at).join(Student_Course, 
-                                                                   Courses.course_id == Student_Course.course_id).filter(Student_Course.student_id == student_id).all()
+    student = Students.query.get(student_id)
+    my_courses = [{
+        "course_title": my.courses.course_title,
+        "course_units": my.courses.course_units,
+        "enrolled_at": my.enrolled_at
+    } for my in student.enrolled ]
+
     return render_template('index.html', page="student", dashboard="my_courses", courses=my_courses)
 
+# Render the list of courses available for the user (student) to see
+@app.route("/student_dashboard/courses", methods = ['GET'])
+@login_required
+@student_only
+def list_of_courses():
+    courses = Courses.query.all()
+    return render_template('index.html', page="student", dashboard="list", courses=courses)
+
+# --------------------------------- STUDENTS --------------------------------- #
+
+# --------------------------------- FACULTY --------------------------------- #
+
+# Render the list of courses the user (faculty) is assigned to
 @app.route("/faculty_dashboard/my_courses" , methods = ['GET'])
 @login_required
+@faculty_only
 def faculty_dashboard():
     faculty_id = current_user.user_id
-    my_courses = db.session.query(Courses.course_title,
-                                  Courses.course_units,
-                                  ).join(Courses_Assigned, 
-                                        Courses.course_id == Courses_Assigned.course_id).filter(Courses_Assigned.faculty_id == faculty_id).all()
+    faculty = Faculty.query.get(faculty_id)
+    my_courses = [{
+        "course_title": my.courses.course_title,
+        "course_units": my.courses.course_units
+    } for my in faculty.courses_assigned ]
     return render_template('index.html', page="faculty", dashboard="my_courses", courses=my_courses)
 
+# Render the list of courses available for the user (faculty) to see
+@app.route("/faculty_dashboard/my_students", methods = ['GET'])
+@login_required
+@faculty_only
+def list_of_students():
+    faculty_id = current_user.user_id
+    faculty = Faculty.query.get(faculty_id)
+    my_students = [{
+        "course_title": my.courses.course_title,
+        "course_units": my.courses.course_units,
+        "my_students": [{
+            "first_name": student.first_name,
+            "last_name": student.last_name
+        } for student in my.courses.students]
+    } for my in faculty.courses_assigned ]
+    return render_template('index.html', page="faculty", dashboard="students", students=my_students,)
+
+# --------------------------------- FACULTY --------------------------------- #
+
+
+# --------------------------------- LIBRARIAN --------------------------------- #
+# Render the list of books of the user (librarian) to manage
 @app.route("/librarian_dashboard/books" , methods = ['GET'])
 @login_required
+@librarian_only
 def librarian_dashboard():
     books = db.session.query(Librarian).all()
     return render_template('index.html', page="librarian", dashboard="books", books=books)
 
-
-@app.route("/admin/" , methods = ['GET'])
+# Render the form for registering new book
+@app.route("/librarian_dashboard/add_book", methods = ['GET', 'POST'])
 @login_required
-def admin():
-    return render_template('index.html', page="admin")
+@librarian_only
+def add_book():
+    form = NewBook()
+    if form.validate_on_submit():
+        new_book = Librarian(
+            lib_id = current_user.user_id,
+            book_id = form.book_id.data,
+            book_title = form.book_title.data,
+            book_author = form.book_author.data
+        )
+        db.session.add(new_book)
+        db.session.commit()
+        return redirect(url_for('librarian_dashboard'))
+    return render_template('index.html', page='librarian', dashboard='new_book', form=form)
+
+
+# --------------------------------- LIBRARIAN --------------------------------- #
+
+
+# --------------------------------- ADMIN --------------------------------- #
+# Render the admin page for adding new user
+@app.route("/admin/new_user" , methods = ['GET'])
+@login_required
+@admin_only
+def admin_dashboard():
+    form = NewUser()
+    if form.validate_on_submit():
+        hashed_password = generate_password_hash(form.password.data, method="pbkdf2:sha256", salt_length=16)
+        role = form.role.data
+        new_user = Users(
+            user_id = form.user_id.data,
+            password = hashed_password,
+            role = role
+        )
+    return render_template('index.html', page="admin", form=form, dashboard="new_user")
+
+@app.route("/admin/new_course" , methods = ['GET'])
+@login_required
+@admin_only
+def new_course():
+    form = NewCourse()
+    return render_template('index.html', page="admin", form=form, dashboard="new_course")
+
+
+# --------------------------------- ADMIN --------------------------------- #
 
 # Logout the user and return to the login page
 @app.route("/logout")

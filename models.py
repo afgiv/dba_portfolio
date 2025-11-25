@@ -28,6 +28,7 @@ class Students(db.Model):
 
     user = db.relationship('Users', backref = 'students', uselist = False)
     courses = db.relationship('Courses', secondary = 'app.student_courses', backref='students')
+    enrolled = db.relationship('Student_Course', backref='students')
 
 class Faculty(db.Model):
     __tablename__ = "faculty"
@@ -40,14 +41,14 @@ class Faculty(db.Model):
     year_joined = db.Column(db.Integer, nullable = False)
 
     user = db.relationship('Users', backref = 'faculty', uselist = False)
-    courses_assigned = db.relationship('Courses', secondary = 'app.courses_assigned', backref='faculty')
+    courses_assigned = db.relationship('Courses_Assigned', backref='faculty')
 
 class Librarian(db.Model):
     __tablename__ = "librarian"
     __table_args__ = {"schema": "app"}
 
-    lib_id = db.Column(db.String(50), db.ForeignKey('app.users.user_id'), primary_key = True)
-    book_id = db.Column(db.Integer, nullable = False)
+    lib_id = db.Column(db.String(50), db.ForeignKey('app.users.user_id'))
+    book_id = db.Column(db.Integer, nullable = False, primary_key = True)
     book_title= db.Column(db.String(100), nullable = False)
     book_author = db.Column(db.String(100), nullable = False)
 
@@ -60,6 +61,9 @@ class Courses(db.Model):
     course_id = db.Column(db.Integer, primary_key = True)
     course_title = db.Column(db.String(120), nullable = False)
     course_units = db.Column(db.Integer, nullable = False)
+
+    enrolled = db.relationship('Student_Course', backref='courses')
+    assigned = db.relationship('Courses_Assigned', backref='courses')
 
 class Student_Course(db.Model):
     __tablename__ = "student_courses"

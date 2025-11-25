@@ -1,31 +1,66 @@
+{% from 'bootstrap5/form.html' import render_form %}
 {% include "header.html" %}
 
 <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center" bis_skin_checked="1">
     <div class="list-group" bis_skin_checked="1">
+        {% if dashboard == 'my_courses' %}
+        {% for course in courses %}
         <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-            {% if dashboard == 'my_courses' %}
             <div class="d-flex gap-2 w-100 justify-content-between" bis_skin_checked="1">
-                {% for course in courses %}
                 <div bis_skin_checked="1">
                     <h6 class="mb-0">{{ course.course_title }}</h6>
                     <p class="mb-0 opacity-75">{{ course.enrolled_at }}</p>
                 </div>
                 <small class="opacity-50 text-nowrap">{{ course.course_units }} units</small>
-                {% endfor %}
             </div>
-            {% elif dashboard == 'books' %}
-            <div class="d-flex gap-2 w-100 justify-content-between" bis_skin_checked="1">
-                {% for book in books %}
-                <div bis_skin_checked="1">
-                    <h6 class="mb-0">{{ book.book_title }}</h6>
-                    <p class="mb-0 opacity-75">{{ book.book_author }}</p>
-                </div>
-                <small class="opacity-50 text-nowrap">Book ID: {{ book.book_id }}</small>
-                {% endfor %}
-            </div>
-            {% endif %}
         </div>
+        {% endfor %}
+        {% elif dashboard == 'list' %}
+        {% for course in courses %}
+        <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <div class="d-flex gap-2 w-100 justify-content-between" bis_skin_checked="1">
+                <div bis_skin_checked="1">
+                    <h6 class="mb-0">{{ course.course_title }}</h6>
+                    <p class="mb-0 opacity-75">{{ course.course_units }} units</p>
+                </div>
+                <small class="opacity-50 text-nowrap">Course ID: {{ course.course_id }}</small>
+            </div>
+        </div>
+        {% endfor %}
+        {% elif dashboard == 'students' %}
+        {% for student in students %}
+        <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <div class="d-flex gap-2 w-100 justify-content-between" bis_skin_checked="1">
+                <div bis_skin_checked="1">
+                    <h6 class="mb-0">{{ student.course_title }}</h6>
+                    {% for s in student.my_students %}
+                    <p class="mb-0 opacity-75">{{ s.first_name }} {{ s.last_name }}</p>
+                    {% endfor %}
+                </div>
+                <small class="opacity-50 text-nowrap">{{ student.course_units }} units</small>
+            </div>
+        </div>
+        {% endfor %}
+        {% elif dashboard == 'books' %}
+        {% for book in books %}
+        <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <div class="d-flex gap-2 w-100 justify-content-between" bis_skin_checked="1">
+                    <div bis_skin_checked="1">
+                        <h6 class="mb-0">{{ book.book_title }}</h6>
+                        <p class="mb-0 opacity-75">{{ book.book_author }}</p>
+                    </div>
+                    <small class="opacity-50 text-nowrap">Book ID: {{ book.book_id }}</small>
+            </div>
+        </div>
+        {% endfor %}
     </div>
+    {% elif dashboard == 'new_book' %}
+    {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+    {% elif dashboard == 'new_user' %}
+    {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+    {% elif dashboard == 'new_course' %}
+    {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+    {% endif %}
 </div>
 
 <!-- div contents will change depending on the usertype and api endpoint-->

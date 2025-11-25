@@ -32,8 +32,8 @@ CREATE TABLE IF NOT EXISTS app.faculty (
 
 -- Create the librarian table
 CREATE TABLE IF NOT EXISTS app.librarian (
-	lib_id VARCHAR(50) PRIMARY KEY,
-	book_id INTEGER NOT NULL,
+	lib_id VARCHAR(50),
+	book_id INTEGER NOT NULL PRIMARY KEY,
 	book_title VARCHAR(100) NOT NULL,
 	book_author VARCHAR(100) NOT NULL,
 	CONSTRAINT fk_lib_id FOREIGN KEY (lib_id) REFERENCES app.users (user_id)
