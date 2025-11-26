@@ -17,7 +17,7 @@ class NewUser(FlaskForm):
 
 # Create the form for registering new course
 class NewCourse(FlaskForm):
-    course_id = StringField(label="Course ID", validators=[DataRequired()])
+    course_id = IntegerField(label="Course ID", validators=[DataRequired()])
     course_title = StringField(label="Title", validators=[DataRequired()])
     course_units = IntegerField(label="Units", validators=[DataRequired()])
     assigned_to = StringField(label="Assigned to", validators=[DataRequired()])
@@ -25,7 +25,14 @@ class NewCourse(FlaskForm):
 
 
 class NewBook(FlaskForm):
-    book_id = StringField(label="Book ID", validators=[DataRequired()])
+    book_id = IntegerField(label="Book ID", validators=[DataRequired()])
     book_title = StringField(label="Title", validators=[DataRequired()])
     book_author = StringField(label="Author", validators=[DataRequired()])
     submit = SubmitField(label="Add book")
+
+class NewEnrollment(FlaskForm):
+    student_id = StringField(label="Student ID", validators=[DataRequired()])
+    course_id = IntegerField(label="Course ID", validators=[DataRequired()])
+    course_title = StringField(label="Title", validators=[DataRequired()])
+    enrolled_at = DateField(label="Enrolled at", validators=[DataRequired()])
+    submit = SubmitField(label="Enroll")

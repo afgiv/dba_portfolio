@@ -4,7 +4,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from flask_bootstrap import Bootstrap5
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
-from models import db, Users, Students, Faculty, Librarian, Courses, Student_Course, Courses_Assigned
+from models import db, Users, Students, Faculty, Librarian, Courses, Student_Course, Courses_Assigned, Books
 from forms import NewUser, NewCourse, NewBook
 from config import Config
 
@@ -68,13 +68,12 @@ def login():
         user_id = request.form['user_id']
         password = request.form['password']
         # Check if the user is in the database
-        result = db.session.execute(db.select(Users).where(Users.user_id == user_id))
-        user = result.scalar()
+        user = Users.query.get(user_id)
         # Check if the credentials met with the one in the database
         if not user:
             flash("User ID does not exist, please contact the admin for further assistance.", "danger")
             return redirect(url_for('login'))
-        elif user.password != password:
+        elif not check_password_hash(user.password, password):
             flash("Password Incorrect, please try again.", "danger")
             return redirect(url_for('login'))
         else:
@@ -179,7 +178,7 @@ def librarian_dashboard():
 def add_book():
     form = NewBook()
     if form.validate_on_submit():
-        new_book = Librarian(
+        new_book = Books(
             lib_id = current_user.user_id,
             book_id = form.book_id.data,
             book_title = form.book_title.data,
@@ -196,7 +195,7 @@ def add_book():
 
 # --------------------------------- ADMIN --------------------------------- #
 # Render the admin page for adding new user
-@app.route("/admin/new_user" , methods = ['GET'])
+@app.route("/admin/new_user" , methods = ['GET', 'POST'])
 @login_required
 @admin_only
 def admin_dashboard():
@@ -204,11 +203,43 @@ def admin_dashboard():
     if form.validate_on_submit():
         hashed_password = generate_password_hash(form.password.data, method="pbkdf2:sha256", salt_length=16)
         role = form.role.data
+        user = form.user_id.data
         new_user = Users(
-            user_id = form.user_id.data,
+            user_id = user,
             password = hashed_password,
-            role = role
+            role = form.role.data
         )
+        db.session.add(new_user)
+        # add the details of the user depending on their role
+        if role == 'students':
+            new_student = Students(
+                student_id = user,
+                first_name = form.first_name.data,
+                last_name = form.last_name.data,
+                birthdate = form.birthdate.data,
+                year_level = form.year.data
+            )
+            db.session.add(new_student)
+        elif role == 'faculty':
+            new_faculty = Faculty(
+                faculty_id = user,
+                first_name = form.first_name.data,
+                last_name = form.last_name.data,
+                birthdate = form.birthdate.data,
+                year_joined = form.year.data
+            )
+            db.session.add(new_faculty)
+        elif role == 'librarian':
+            new_librarian = Librarian(
+                lib_id = user,
+                first_name = form.first_name.data,
+                last_name = form.last_name.data,
+                birthdate = form.birthdate.data,
+                year_joined = form.year.data
+            )
+            db.session.add(new_librarian)
+        db.session.commit()
+        return redirect(url_for('admin_dashboard'))
     return render_template('index.html', page="admin", form=form, dashboard="new_user")
 
 @app.route("/admin/new_course" , methods = ['GET'])
@@ -216,6 +247,18 @@ def admin_dashboard():
 @admin_only
 def new_course():
     form = NewCourse()
+    if form.validate_on_submit():
+        new_course = Courses(
+            course_id = form.course_id.data,
+            course_title = form.course_title.data,
+            course_units = form.course_units.data
+        )
+        db.session.add(new_course)
+        new_assignment = Courses_Assigned(
+            assigned_to = form.assigned_to.data,
+            course_id = form.course_id.data
+        )
+        db.session.add(new_assignment)
     return render_template('index.html', page="admin", form=form, dashboard="new_course")
 
 

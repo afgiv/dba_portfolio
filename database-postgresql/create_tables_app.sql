@@ -5,7 +5,7 @@
 -- Create the users table
 CREATE TABLE IF NOT EXISTS app.users (
 	user_id VARCHAR(50) PRIMARY KEY,
-	password VARCHAR(20) NOT NULL,
+	password TEXT NOT NULL,
 	role VARCHAR(20) NOT NULL,
 	created_at DATE DEFAULT CURRENT_DATE NOT NULL
 );
@@ -32,11 +32,21 @@ CREATE TABLE IF NOT EXISTS app.faculty (
 
 -- Create the librarian table
 CREATE TABLE IF NOT EXISTS app.librarian (
+	lib_id VARCHAR(50) PRIMARY KEY,
+	first_name VARCHAR(20) NOT NULL,
+	last_name VARCHAR(20) NOT NULL,
+	birthdate DATE NOT NULL,
+	year_joined INTEGER NOT NULL,
+	CONSTRAINT fk_lib_id FOREIGN KEY (lib_id) REFERENCES app.users (user_id)
+);
+
+-- Create the books table
+CREATE TABLE IF NOT EXISTS app.books (
 	lib_id VARCHAR(50),
 	book_id INTEGER NOT NULL PRIMARY KEY,
 	book_title VARCHAR(100) NOT NULL,
 	book_author VARCHAR(100) NOT NULL,
-	CONSTRAINT fk_lib_id FOREIGN KEY (lib_id) REFERENCES app.users (user_id)
+	CONSTRAINT fk_b_lib_id FOREIGN KEY (lib_id) REFERENCES app.librarian (lib_id)
 );
 
 -- Create the courses table

@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 
 db = SQLAlchemy()
 
@@ -8,9 +9,9 @@ class Users(db.Model, UserMixin):
     __table_args__ = {"schema": "app"}
 
     user_id = db.Column(db.String(50), primary_key = True)
-    password = db.Column(db.String(20), nullable = False)
+    password = db.Column(db.Text, nullable = False)
     role = db.Column(db.String(20), nullable = False)
-    created_at = db.Column(db.Date, nullable = False)
+    created_at = db.Column(db.Date, server_default = func.current_date(), nullable = False)
 
     def get_id(self):
         return self.user_id
@@ -47,12 +48,23 @@ class Librarian(db.Model):
     __tablename__ = "librarian"
     __table_args__ = {"schema": "app"}
 
-    lib_id = db.Column(db.String(50), db.ForeignKey('app.users.user_id'))
+    lib_id = db.Column(db.String(50), db.ForeignKey('app.users.user_id'), primary_key = True)
+    first_name = db.Column(db.String(20), nullable = False)
+    last_name = db.Column(db.String(20), nullable = False)
+    birthdate = db.Column(db.Date, nullable = False)
+    year_joined = db.Column(db.Integer, nullable = False)
+
+    user = db.relationship('Users', backref = 'librarian', uselist = False)
+    books_registered = db.relationship('Books', backref = 'librarian')
+
+class Books(db.Model):
+    __tablename__ = "books"
+    __table_args__ = {"schema": "app"}
+
+    lib_id = db.Column(db.String(50), db.ForeignKey('app.librarian.lib_id'))
     book_id = db.Column(db.Integer, nullable = False, primary_key = True)
     book_title= db.Column(db.String(100), nullable = False)
     book_author = db.Column(db.String(100), nullable = False)
-
-    user = db.relationship('Users', backref = 'librarian', uselist = False)
 
 class Courses(db.Model):
     __tablename__ = "courses"

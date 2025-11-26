@@ -11,6 +11,15 @@
         <main class="form-signin w-100 m-auto">
             <form method="post" action="{{ url_for('login') }}"> 
                 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mt-3" role="alert">
+                    {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
                 <div class="form-floating" bis_skin_checked="1">
                     <input type="text" name="user_id" class="form-control" id="floatingInput" placeholder="name@example.com" required>
                     <label for="floatingInput">User ID</label> </div>
