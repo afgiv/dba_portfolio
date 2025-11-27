@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS app.librarian (
 -- Create the books table
 CREATE TABLE IF NOT EXISTS app.books (
 	lib_id VARCHAR(50),
-	book_id INTEGER NOT NULL PRIMARY KEY,
+	book_id INTEGER PRIMARY KEY,
 	book_title VARCHAR(100) NOT NULL,
 	book_author VARCHAR(100) NOT NULL,
 	CONSTRAINT fk_b_lib_id FOREIGN KEY (lib_id) REFERENCES app.librarian (lib_id)
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS app.books (
 
 -- Create the courses table
 CREATE TABLE IF NOT EXISTS app.courses (
-	course_id SERIAL PRIMARY KEY,
+	course_id INTEGER PRIMARY KEY,
 	course_title VARCHAR(120) NOT NULL,
 	course_units INTEGER NOT NULL
 );

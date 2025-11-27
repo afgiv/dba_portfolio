@@ -1,6 +1,7 @@
 # Import the necessary packages
 from flask import Flask, request, render_template, flash, url_for, redirect, abort
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap5
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
@@ -17,6 +18,7 @@ Bootstrap5(app)
 
 # Initialize the database
 db.init_app(app)
+migrate = Migrate(app, db)
 
 # Initialize the Flask login
 login_manager = LoginManager()
@@ -142,7 +144,7 @@ def faculty_dashboard():
     } for my in faculty.courses_assigned ]
     return render_template('index.html', page="faculty", dashboard="my_courses", courses=my_courses)
 
-# Render the list of courses available for the user (faculty) to see
+# Render the list of students of the user (faculty)
 @app.route("/faculty_dashboard/my_students", methods = ['GET'])
 @login_required
 @faculty_only
@@ -242,7 +244,7 @@ def admin_dashboard():
         return redirect(url_for('admin_dashboard'))
     return render_template('index.html', page="admin", form=form, dashboard="new_user")
 
-@app.route("/admin/new_course" , methods = ['GET'])
+@app.route("/admin/new_course" , methods = ['GET', 'POST'])
 @login_required
 @admin_only
 def new_course():
@@ -255,10 +257,12 @@ def new_course():
         )
         db.session.add(new_course)
         new_assignment = Courses_Assigned(
-            assigned_to = form.assigned_to.data,
+            faculty_id = form.assigned_to.data,
             course_id = form.course_id.data
         )
         db.session.add(new_assignment)
+        db.session.commit()
+        return redirect(url_for('new_course'))
     return render_template('index.html', page="admin", form=form, dashboard="new_course")
 
 

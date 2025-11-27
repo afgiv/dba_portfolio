@@ -19,9 +19,10 @@ GRANT USAGE, CREATE ON SCHEMA analysis TO dba;
 GRANT USAGE, CREATE ON SCHEMA qa TO dba;
 
 -- App user access (for Flask app)
-GRANT USAGE ON SCHEMA app to app_user;
+GRANT USAGE, CREATE ON SCHEMA app to app_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA app
-GRANT SELECT, INSERT, UPDATE ON TABLES TO app_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO app_user;
+
 
 -- Data engineer access (for ETL tasks)
 GRANT USAGE, CREATE ON SCHEMA etl TO d_engineer;

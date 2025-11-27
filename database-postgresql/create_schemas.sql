@@ -2,7 +2,7 @@
 
 
 -- Create the schemas for roles for their usage
-CREATE SCHEMA app;
+CREATE SCHEMA app AUTHORIZATION app_user;
 CREATE SCHEMA etl;
 CREATE SCHEMA analysis;
 CREATE SCHEMA qa;
