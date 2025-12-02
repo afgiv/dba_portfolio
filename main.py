@@ -6,7 +6,7 @@ from flask_bootstrap import Bootstrap5
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
 from models import db, Users, Students, Faculty, Librarian, Courses, Student_Course, Courses_Assigned, Books
-from forms import NewUser, NewCourse, NewBook
+from forms import NewUser, NewCourse, NewBook, NewEnrollment
 from config import Config
 
 # Create the Flask app
@@ -206,42 +206,46 @@ def admin_dashboard():
         hashed_password = generate_password_hash(form.password.data, method="pbkdf2:sha256", salt_length=16)
         role = form.role.data
         user = form.user_id.data
-        new_user = Users(
-            user_id = user,
-            password = hashed_password,
-            role = form.role.data
-        )
-        db.session.add(new_user)
-        # add the details of the user depending on their role
-        if role == 'students':
-            new_student = Students(
-                student_id = user,
-                first_name = form.first_name.data,
-                last_name = form.last_name.data,
-                birthdate = form.birthdate.data,
-                year_level = form.year.data
+        true_user = Users.query.get(user)
+        if true_user:
+            flash("User already exists!", "danger")
+        else:
+            new_user = Users(
+                user_id = user,
+                password = hashed_password,
+                role = form.role.data
             )
-            db.session.add(new_student)
-        elif role == 'faculty':
-            new_faculty = Faculty(
-                faculty_id = user,
-                first_name = form.first_name.data,
-                last_name = form.last_name.data,
-                birthdate = form.birthdate.data,
-                year_joined = form.year.data
-            )
-            db.session.add(new_faculty)
-        elif role == 'librarian':
-            new_librarian = Librarian(
-                lib_id = user,
-                first_name = form.first_name.data,
-                last_name = form.last_name.data,
-                birthdate = form.birthdate.data,
-                year_joined = form.year.data
-            )
-            db.session.add(new_librarian)
-        db.session.commit()
-        return redirect(url_for('admin_dashboard'))
+            db.session.add(new_user)
+            # add the details of the user depending on their role
+            if role == 'student':
+                new_student = Students(
+                    student_id = user,
+                    first_name = form.first_name.data,
+                    last_name = form.last_name.data,
+                    birthdate = form.birthdate.data,
+                    year_level = form.year.data
+                )
+                db.session.add(new_student)
+            elif role == 'faculty':
+                new_faculty = Faculty(
+                    faculty_id = user,
+                    first_name = form.first_name.data,
+                    last_name = form.last_name.data,
+                    birthdate = form.birthdate.data,
+                    year_joined = form.year.data
+                )
+                db.session.add(new_faculty)
+            elif role == 'librarian':
+                new_librarian = Librarian(
+                    lib_id = user,
+                    first_name = form.first_name.data,
+                    last_name = form.last_name.data,
+                    birthdate = form.birthdate.data,
+                    year_joined = form.year.data
+                )
+                db.session.add(new_librarian)
+            db.session.commit()
+            return redirect(url_for('admin_dashboard'))
     return render_template('index.html', page="admin", form=form, dashboard="new_user")
 
 @app.route("/admin/new_course" , methods = ['GET', 'POST'])
@@ -265,6 +269,21 @@ def new_course():
         return redirect(url_for('new_course'))
     return render_template('index.html', page="admin", form=form, dashboard="new_course")
 
+@app.route("/admin/new_enrollment", methods = ['GET', 'POST'])
+@login_required
+@admin_only
+def new_enrollment():
+    form = NewEnrollment()
+    if form.validate_on_submit():
+        new_enrollment = Student_Course(
+            student_id = form.student_id.data,
+            course_id = form.course_id.data,
+            enrolled_at = form.enrolled_at.data
+        )
+        db.session.add(new_enrollment)
+        db.session.commit()
+        return redirect(url_for('new_enrollment'))
+    return render_template('index.html', page="admin", form=form, dashboard="new_enrollment")
 
 # --------------------------------- ADMIN --------------------------------- #
 

@@ -11,7 +11,7 @@
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         {% if page == 'student' %}
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{{ url_for('student_dashboard') }}" class="nav-link px-2 link-secondary">My Courses</a></li>
+            <li><a href="{{ url_for('student_dashboard') }}" class="nav-link px-2">My Courses</a></li>
             <li><a href="{{ url_for('list_of_courses') }}" class="nav-link px-2">Courses</a></li>
         </ul>
         <div class="col-md-3 text-end" bis_skin_checked="1">
@@ -19,7 +19,7 @@
         </div>
         {% elif page == 'faculty' %}
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{{ url_for('faculty_dashboard') }}" class="nav-link px-2 link-secondary">My Courses</a></li>
+            <li><a href="{{ url_for('faculty_dashboard') }}" class="nav-link px-2">My Courses</a></li>
             <li><a href="{{ url_for('list_of_students') }}" class="nav-link px-2">My Students</a></li>
         </ul>
         <div class="col-md-3 text-end" bis_skin_checked="1">
@@ -27,7 +27,7 @@
         </div>
         {% elif page == 'librarian' %}
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{{ url_for('librarian_dashboard') }}" class="nav-link px-2 link-secondary">Books</a></li>
+            <li><a href="{{ url_for('librarian_dashboard') }}" class="nav-link px-2">Books</a></li>
             <li><a href="{{ url_for('add_book') }}" class="nav-link px-2">Add a New Book</a></li>
         </ul>
         <div class="col-md-3 text-end" bis_skin_checked="1">
@@ -35,8 +35,9 @@
         </div>
         {% elif page == 'admin' %}
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{{ url_for('admin_dashboard') }}" class="nav-link px-2 link-secondary">Users</a></li>
+            <li><a href="{{ url_for('admin_dashboard') }}" class="nav-link px-2">Users</a></li>
             <li><a href="{{ url_for('new_course') }}" class="nav-link px-2">Courses</a></li>
+            <li><a href="{{ url_for('new_enrollment') }}" class="nav-link px-2">Enrollment</a></li>
         </ul>
         <div class="col-md-3 text-end" bis_skin_checked="1">
         <a type="button" class="btn btn-primary" href="{{ url_for('logout') }}">Logout</a>

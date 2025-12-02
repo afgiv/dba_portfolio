@@ -57,8 +57,19 @@
     {% elif dashboard == 'new_book' %}
     {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
     {% elif dashboard == 'new_user' %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} mt-3" role="alert">
+    {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
     {% elif dashboard == 'new_course' %}
+    {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+    {% elif dashboard == 'new_enrollment' %}
     {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
     {% endif %}
 </div>

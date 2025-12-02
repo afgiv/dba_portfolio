@@ -10,7 +10,7 @@ class NewUser(FlaskForm):
     role = SelectField(label="Role", choices=[('student', 'Student'), 
                                               ('faculty', 'Faculty'), ('librarian', 'Librarian')], validators=[DataRequired()])
     first_name = StringField(label="First Name", validators=[DataRequired()])
-    last_name = StringField(label="First Name", validators=[DataRequired()])
+    last_name = StringField(label="Last Name", validators=[DataRequired()])
     birthdate = DateField(label="Birthdate", validators=[DataRequired()])
     year = IntegerField(label="Year Level/Year Joined")
     submit = SubmitField(label="Add user")
@@ -33,6 +33,5 @@ class NewBook(FlaskForm):
 class NewEnrollment(FlaskForm):
     student_id = StringField(label="Student ID", validators=[DataRequired()])
     course_id = IntegerField(label="Course ID", validators=[DataRequired()])
-    course_title = StringField(label="Title", validators=[DataRequired()])
     enrolled_at = DateField(label="Enrolled at", validators=[DataRequired()])
     submit = SubmitField(label="Enroll")
