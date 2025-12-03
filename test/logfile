@@ -1,0 +1,401 @@
+2025-12-03 14:47:11.671 +08 [17552] LOG:  starting PostgreSQL 17.6 on x86_64-windows, compiled by msvc-19.44.35213, 64-bit
+2025-12-03 14:47:11.676 +08 [17552] LOG:  could not bind IPv6 address "::1": Permission denied
+2025-12-03 14:47:11.677 +08 [17552] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2025-12-03 14:47:11.677 +08 [17552] WARNING:  could not create listen socket for "localhost"
+2025-12-03 14:47:11.677 +08 [17552] FATAL:  could not create any TCP/IP sockets
+2025-12-03 14:47:11.680 +08 [17552] LOG:  database system is shut down
+2025-12-03 14:47:28.387 +08 [12324] LOG:  starting PostgreSQL 17.6 on x86_64-windows, compiled by msvc-19.44.35213, 64-bit
+2025-12-03 14:47:28.391 +08 [12324] LOG:  listening on IPv6 address "::1", port 5333
+2025-12-03 14:47:28.391 +08 [12324] LOG:  listening on IPv4 address "127.0.0.1", port 5333
+2025-12-03 14:47:28.428 +08 [17788] LOG:  database system was shut down at 2025-12-03 14:46:06 +08
+2025-12-03 14:47:28.445 +08 [12324] LOG:  database system is ready to accept connections
+2025-12-03 14:50:45.493 +08 [17796] FATAL:  role "admin" does not exist
+2025-12-03 14:51:12.831 +08 [13360] FATAL:  role "postgres" does not exist
+2025-12-03 14:52:28.434 +08 [4080] LOG:  checkpoint starting: time
+2025-12-03 14:52:33.491 +08 [4080] LOG:  checkpoint complete: wrote 49 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=5.037 s, sync=0.013 s, total=5.058 s; sync files=15, longest=0.003 s, average=0.001 s; distance=277 kB, estimate=277 kB; lsn=0/15B27B0, redo lsn=0/15B2758
+2025-12-03 14:56:38.131 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.131 +08 [14428] STATEMENT:  ALTER SCHEMA app OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.149 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.149 +08 [14428] STATEMENT:  ALTER TABLE app.alembic_version OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.156 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.156 +08 [14428] STATEMENT:  ALTER TABLE app.books OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.163 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.163 +08 [14428] STATEMENT:  ALTER TABLE app.courses OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.168 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.168 +08 [14428] STATEMENT:  ALTER TABLE app.courses_assigned OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.178 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.178 +08 [14428] STATEMENT:  ALTER SEQUENCE app.courses_course_id_seq OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.194 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.194 +08 [14428] STATEMENT:  ALTER TABLE app.faculty OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.207 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.207 +08 [14428] STATEMENT:  ALTER TABLE app.librarian OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.215 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.215 +08 [14428] STATEMENT:  ALTER TABLE app.student_courses OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.231 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.231 +08 [14428] STATEMENT:  ALTER TABLE app.students OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.261 +08 [14428] ERROR:  must be able to SET ROLE "app_user"
+2025-12-03 14:56:38.261 +08 [14428] STATEMENT:  ALTER TABLE app.users OWNER TO app_user;
+	
+	
+2025-12-03 14:56:38.360 +08 [14428] ERROR:  permission denied to change default privileges
+2025-12-03 14:56:38.360 +08 [14428] STATEMENT:  ALTER DEFAULT PRIVILEGES FOR ROLE admin IN SCHEMA analysis GRANT SELECT ON TABLES TO d_analyst;
+	
+	
+	
+2025-12-03 14:56:38.372 +08 [14428] ERROR:  permission denied to change default privileges
+2025-12-03 14:56:38.372 +08 [14428] STATEMENT:  ALTER DEFAULT PRIVILEGES FOR ROLE app_user IN SCHEMA app GRANT SELECT,USAGE ON SEQUENCES TO dba;
+	
+	
+	
+2025-12-03 14:56:38.391 +08 [14428] ERROR:  permission denied to change default privileges
+2025-12-03 14:56:38.391 +08 [14428] STATEMENT:  ALTER DEFAULT PRIVILEGES FOR ROLE admin IN SCHEMA app GRANT SELECT,INSERT,DELETE,UPDATE ON TABLES TO app_user;
+	
+	
+	
+2025-12-03 14:56:38.422 +08 [14428] ERROR:  permission denied to change default privileges
+2025-12-03 14:56:38.422 +08 [14428] STATEMENT:  ALTER DEFAULT PRIVILEGES FOR ROLE app_user IN SCHEMA app GRANT SELECT ON TABLES TO dba;
+	
+	
+	
+2025-12-03 14:56:38.454 +08 [14428] ERROR:  permission denied to change default privileges
+2025-12-03 14:56:38.454 +08 [14428] STATEMENT:  ALTER DEFAULT PRIVILEGES FOR ROLE admin IN SCHEMA qa GRANT SELECT,INSERT ON TABLES TO qa_engineer;
+	
+	
+	
+2025-12-03 14:57:28.506 +08 [4080] LOG:  checkpoint starting: time
+2025-12-03 14:58:04.697 +08 [18700] ERROR:  schema "analysis" already exists
+2025-12-03 14:58:04.697 +08 [18700] STATEMENT:  CREATE SCHEMA analysis;
+	
+	
+	
+2025-12-03 14:58:04.704 +08 [18700] ERROR:  schema "app" already exists
+2025-12-03 14:58:04.704 +08 [18700] STATEMENT:  CREATE SCHEMA app;
+	
+	
+	
+2025-12-03 14:58:04.714 +08 [18700] ERROR:  schema "etl" already exists
+2025-12-03 14:58:04.714 +08 [18700] STATEMENT:  CREATE SCHEMA etl;
+	
+	
+	
+2025-12-03 14:58:04.740 +08 [18700] ERROR:  schema "qa" already exists
+2025-12-03 14:58:04.740 +08 [18700] STATEMENT:  CREATE SCHEMA qa;
+	
+	
+	
+2025-12-03 14:58:04.749 +08 [18700] ERROR:  relation "alembic_version" already exists
+2025-12-03 14:58:04.749 +08 [18700] STATEMENT:  CREATE TABLE app.alembic_version (
+	    version_num character varying(32) NOT NULL
+	);
+	
+	
+	
+2025-12-03 14:58:04.769 +08 [18700] ERROR:  relation "books" already exists
+2025-12-03 14:58:04.769 +08 [18700] STATEMENT:  CREATE TABLE app.books (
+	    lib_id character varying(50),
+	    book_id integer NOT NULL,
+	    book_title character varying(100) NOT NULL,
+	    book_author character varying(100) NOT NULL
+	);
+	
+	
+	
+2025-12-03 14:58:04.797 +08 [18700] ERROR:  relation "courses" already exists
+2025-12-03 14:58:04.797 +08 [18700] STATEMENT:  CREATE TABLE app.courses (
+	    course_id integer NOT NULL,
+	    course_title character varying(120) NOT NULL,
+	    course_units integer NOT NULL
+	);
+	
+	
+	
+2025-12-03 14:58:04.827 +08 [18700] ERROR:  relation "courses_assigned" already exists
+2025-12-03 14:58:04.827 +08 [18700] STATEMENT:  CREATE TABLE app.courses_assigned (
+	    course_id integer NOT NULL,
+	    faculty_id character varying(50) NOT NULL
+	);
+	
+	
+	
+2025-12-03 14:58:04.860 +08 [18700] ERROR:  relation "courses_course_id_seq" already exists
+2025-12-03 14:58:04.860 +08 [18700] STATEMENT:  CREATE SEQUENCE app.courses_course_id_seq
+	    AS integer
+	    START WITH 1
+	    INCREMENT BY 1
+	    NO MINVALUE
+	    NO MAXVALUE
+	    CACHE 1;
+	
+	
+	
+2025-12-03 14:58:04.905 +08 [18700] ERROR:  relation "faculty" already exists
+2025-12-03 14:58:04.905 +08 [18700] STATEMENT:  CREATE TABLE app.faculty (
+	    faculty_id character varying(50) NOT NULL,
+	    first_name character varying(20) NOT NULL,
+	    last_name character varying(20) NOT NULL,
+	    birthdate date NOT NULL,
+	    year_joined integer NOT NULL
+	);
+	
+	
+	
+2025-12-03 14:58:04.939 +08 [18700] ERROR:  relation "librarian" already exists
+2025-12-03 14:58:04.939 +08 [18700] STATEMENT:  CREATE TABLE app.librarian (
+	    lib_id character varying(50) NOT NULL,
+	    first_name character varying(20) NOT NULL,
+	    last_name character varying(20) NOT NULL,
+	    birthdate date NOT NULL,
+	    year_joined integer NOT NULL
+	);
+	
+	
+	
+2025-12-03 14:58:04.986 +08 [18700] ERROR:  relation "student_courses" already exists
+2025-12-03 14:58:04.986 +08 [18700] STATEMENT:  CREATE TABLE app.student_courses (
+	    course_id integer NOT NULL,
+	    student_id character varying(50) NOT NULL,
+	    enrolled_at date NOT NULL
+	);
+	
+	
+	
+2025-12-03 14:58:05.030 +08 [18700] ERROR:  relation "students" already exists
+2025-12-03 14:58:05.030 +08 [18700] STATEMENT:  CREATE TABLE app.students (
+	    student_id character varying(50) NOT NULL,
+	    first_name character varying(20) NOT NULL,
+	    last_name character varying(20) NOT NULL,
+	    birthdate date NOT NULL,
+	    year_level integer NOT NULL
+	);
+	
+	
+	
+2025-12-03 14:58:05.059 +08 [18700] ERROR:  relation "users" already exists
+2025-12-03 14:58:05.059 +08 [18700] STATEMENT:  CREATE TABLE app.users (
+	    user_id character varying(50) NOT NULL,
+	    password text NOT NULL,
+	    role character varying(20) NOT NULL,
+	    created_at date DEFAULT CURRENT_DATE NOT NULL
+	);
+	
+	
+	
+2025-12-03 14:58:05.092 +08 [18700] ERROR:  duplicate key value violates unique constraint "alembic_version_pkc"
+2025-12-03 14:58:05.092 +08 [18700] DETAIL:  Key (version_num)=(72b3e4d98a98) already exists.
+2025-12-03 14:58:05.092 +08 [18700] CONTEXT:  COPY alembic_version, line 1
+2025-12-03 14:58:05.092 +08 [18700] STATEMENT:  COPY app.alembic_version (version_num) FROM stdin;
+	
+2025-12-03 14:58:05.105 +08 [18700] ERROR:  duplicate key value violates unique constraint "courses_pkey"
+2025-12-03 14:58:05.105 +08 [18700] DETAIL:  Key (course_id)=(101) already exists.
+2025-12-03 14:58:05.105 +08 [18700] CONTEXT:  COPY courses, line 1
+2025-12-03 14:58:05.105 +08 [18700] STATEMENT:  COPY app.courses (course_id, course_title, course_units) FROM stdin;
+	
+2025-12-03 14:58:05.126 +08 [18700] ERROR:  duplicate key value violates unique constraint "pk_ca"
+2025-12-03 14:58:05.126 +08 [18700] DETAIL:  Key (course_id, faculty_id)=(101, F-20251010) already exists.
+2025-12-03 14:58:05.126 +08 [18700] CONTEXT:  COPY courses_assigned, line 1
+2025-12-03 14:58:05.126 +08 [18700] STATEMENT:  COPY app.courses_assigned (course_id, faculty_id) FROM stdin;
+	
+2025-12-03 14:58:05.149 +08 [18700] ERROR:  duplicate key value violates unique constraint "faculty_pkey"
+2025-12-03 14:58:05.149 +08 [18700] DETAIL:  Key (faculty_id)=(F-20251010) already exists.
+2025-12-03 14:58:05.149 +08 [18700] CONTEXT:  COPY faculty, line 1
+2025-12-03 14:58:05.149 +08 [18700] STATEMENT:  COPY app.faculty (faculty_id, first_name, last_name, birthdate, year_joined) FROM stdin;
+	
+2025-12-03 14:58:05.172 +08 [18700] ERROR:  duplicate key value violates unique constraint "pk_stc"
+2025-12-03 14:58:05.172 +08 [18700] DETAIL:  Key (course_id, student_id)=(101, S-20251010) already exists.
+2025-12-03 14:58:05.172 +08 [18700] CONTEXT:  COPY student_courses, line 1
+2025-12-03 14:58:05.172 +08 [18700] STATEMENT:  COPY app.student_courses (course_id, student_id, enrolled_at) FROM stdin;
+	
+2025-12-03 14:58:05.187 +08 [18700] ERROR:  duplicate key value violates unique constraint "students_pkey"
+2025-12-03 14:58:05.187 +08 [18700] DETAIL:  Key (student_id)=(S-20251010) already exists.
+2025-12-03 14:58:05.187 +08 [18700] CONTEXT:  COPY students, line 1
+2025-12-03 14:58:05.187 +08 [18700] STATEMENT:  COPY app.students (student_id, first_name, last_name, birthdate, year_level) FROM stdin;
+	
+2025-12-03 14:58:05.206 +08 [18700] ERROR:  duplicate key value violates unique constraint "users_pkey"
+2025-12-03 14:58:05.206 +08 [18700] DETAIL:  Key (user_id)=(S-20251010) already exists.
+2025-12-03 14:58:05.206 +08 [18700] CONTEXT:  COPY users, line 1
+2025-12-03 14:58:05.206 +08 [18700] STATEMENT:  COPY app.users (user_id, password, role, created_at) FROM stdin;
+	
+2025-12-03 14:58:05.220 +08 [18700] ERROR:  multiple primary keys for table "alembic_version" are not allowed
+2025-12-03 14:58:05.220 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.alembic_version
+	    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
+	
+	
+	
+2025-12-03 14:58:05.250 +08 [18700] ERROR:  multiple primary keys for table "books" are not allowed
+2025-12-03 14:58:05.250 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.books
+	    ADD CONSTRAINT book_pkey PRIMARY KEY (book_id);
+	
+	
+	
+2025-12-03 14:58:05.268 +08 [18700] ERROR:  multiple primary keys for table "courses" are not allowed
+2025-12-03 14:58:05.268 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.courses
+	    ADD CONSTRAINT courses_pkey PRIMARY KEY (course_id);
+	
+	
+	
+2025-12-03 14:58:05.293 +08 [18700] ERROR:  multiple primary keys for table "faculty" are not allowed
+2025-12-03 14:58:05.293 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.faculty
+	    ADD CONSTRAINT faculty_pkey PRIMARY KEY (faculty_id);
+	
+	
+	
+2025-12-03 14:58:05.313 +08 [18700] ERROR:  multiple primary keys for table "librarian" are not allowed
+2025-12-03 14:58:05.313 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.librarian
+	    ADD CONSTRAINT librarian_pkey1 PRIMARY KEY (lib_id);
+	
+	
+	
+2025-12-03 14:58:05.341 +08 [18700] ERROR:  multiple primary keys for table "courses_assigned" are not allowed
+2025-12-03 14:58:05.341 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.courses_assigned
+	    ADD CONSTRAINT pk_ca PRIMARY KEY (course_id, faculty_id);
+	
+	
+	
+2025-12-03 14:58:05.359 +08 [18700] ERROR:  multiple primary keys for table "student_courses" are not allowed
+2025-12-03 14:58:05.359 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.student_courses
+	    ADD CONSTRAINT pk_stc PRIMARY KEY (course_id, student_id);
+	
+	
+	
+2025-12-03 14:58:05.379 +08 [18700] ERROR:  multiple primary keys for table "students" are not allowed
+2025-12-03 14:58:05.379 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.students
+	    ADD CONSTRAINT students_pkey PRIMARY KEY (student_id);
+	
+	
+	
+2025-12-03 14:58:05.401 +08 [18700] ERROR:  multiple primary keys for table "users" are not allowed
+2025-12-03 14:58:05.401 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.users
+	    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+	
+	
+	
+2025-12-03 14:58:05.421 +08 [18700] ERROR:  relation "ix_app_books_book_id" already exists
+2025-12-03 14:58:05.421 +08 [18700] STATEMENT:  CREATE INDEX ix_app_books_book_id ON app.books USING btree (book_id);
+	
+	
+	
+2025-12-03 14:58:05.439 +08 [18700] ERROR:  relation "ix_app_courses_assigned_course_id" already exists
+2025-12-03 14:58:05.439 +08 [18700] STATEMENT:  CREATE INDEX ix_app_courses_assigned_course_id ON app.courses_assigned USING btree (course_id);
+	
+	
+	
+2025-12-03 14:58:05.455 +08 [18700] ERROR:  relation "ix_app_courses_assigned_faculty_id" already exists
+2025-12-03 14:58:05.455 +08 [18700] STATEMENT:  CREATE INDEX ix_app_courses_assigned_faculty_id ON app.courses_assigned USING btree (faculty_id);
+	
+	
+	
+2025-12-03 14:58:05.483 +08 [18700] ERROR:  relation "ix_app_courses_course_id" already exists
+2025-12-03 14:58:05.483 +08 [18700] STATEMENT:  CREATE INDEX ix_app_courses_course_id ON app.courses USING btree (course_id);
+	
+	
+	
+2025-12-03 14:58:05.501 +08 [18700] ERROR:  relation "ix_app_faculty_faculty_id" already exists
+2025-12-03 14:58:05.501 +08 [18700] STATEMENT:  CREATE INDEX ix_app_faculty_faculty_id ON app.faculty USING btree (faculty_id);
+	
+	
+	
+2025-12-03 14:58:05.517 +08 [18700] ERROR:  relation "ix_app_librarian_lib_id" already exists
+2025-12-03 14:58:05.517 +08 [18700] STATEMENT:  CREATE INDEX ix_app_librarian_lib_id ON app.librarian USING btree (lib_id);
+	
+	
+	
+2025-12-03 14:58:05.534 +08 [18700] ERROR:  relation "ix_app_student_courses_course_id" already exists
+2025-12-03 14:58:05.534 +08 [18700] STATEMENT:  CREATE INDEX ix_app_student_courses_course_id ON app.student_courses USING btree (course_id);
+	
+	
+	
+2025-12-03 14:58:05.551 +08 [18700] ERROR:  relation "ix_app_student_courses_student_id" already exists
+2025-12-03 14:58:05.551 +08 [18700] STATEMENT:  CREATE INDEX ix_app_student_courses_student_id ON app.student_courses USING btree (student_id);
+	
+	
+	
+2025-12-03 14:58:05.577 +08 [18700] ERROR:  relation "ix_app_students_student_id" already exists
+2025-12-03 14:58:05.577 +08 [18700] STATEMENT:  CREATE INDEX ix_app_students_student_id ON app.students USING btree (student_id);
+	
+	
+	
+2025-12-03 14:58:05.592 +08 [18700] ERROR:  relation "ix_app_users_user_id" already exists
+2025-12-03 14:58:05.592 +08 [18700] STATEMENT:  CREATE INDEX ix_app_users_user_id ON app.users USING btree (user_id);
+	
+	
+	
+2025-12-03 14:58:05.609 +08 [18700] ERROR:  constraint "books_lib_id_fkey" for relation "books" already exists
+2025-12-03 14:58:05.609 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.books
+	    ADD CONSTRAINT books_lib_id_fkey FOREIGN KEY (lib_id) REFERENCES app.librarian(lib_id);
+	
+	
+	
+2025-12-03 14:58:05.629 +08 [18700] ERROR:  constraint "courses_assigned_course_id_fkey" for relation "courses_assigned" already exists
+2025-12-03 14:58:05.629 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.courses_assigned
+	    ADD CONSTRAINT courses_assigned_course_id_fkey FOREIGN KEY (course_id) REFERENCES app.courses(course_id);
+	
+	
+	
+2025-12-03 14:58:05.653 +08 [18700] ERROR:  constraint "courses_assigned_faculty_id_fkey" for relation "courses_assigned" already exists
+2025-12-03 14:58:05.653 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.courses_assigned
+	    ADD CONSTRAINT courses_assigned_faculty_id_fkey FOREIGN KEY (faculty_id) REFERENCES app.faculty(faculty_id);
+	
+	
+	
+2025-12-03 14:58:05.674 +08 [18700] ERROR:  constraint "faculty_faculty_id_fkey" for relation "faculty" already exists
+2025-12-03 14:58:05.674 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.faculty
+	    ADD CONSTRAINT faculty_faculty_id_fkey FOREIGN KEY (faculty_id) REFERENCES app.users(user_id);
+	
+	
+	
+2025-12-03 14:58:05.704 +08 [18700] ERROR:  constraint "librarian_lib_id_fkey" for relation "librarian" already exists
+2025-12-03 14:58:05.704 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.librarian
+	    ADD CONSTRAINT librarian_lib_id_fkey FOREIGN KEY (lib_id) REFERENCES app.users(user_id);
+	
+	
+	
+2025-12-03 14:58:05.741 +08 [18700] ERROR:  constraint "student_courses_course_id_fkey" for relation "student_courses" already exists
+2025-12-03 14:58:05.741 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.student_courses
+	    ADD CONSTRAINT student_courses_course_id_fkey FOREIGN KEY (course_id) REFERENCES app.courses(course_id);
+	
+	
+	
+2025-12-03 14:58:05.765 +08 [18700] ERROR:  constraint "student_courses_student_id_fkey" for relation "student_courses" already exists
+2025-12-03 14:58:05.765 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.student_courses
+	    ADD CONSTRAINT student_courses_student_id_fkey FOREIGN KEY (student_id) REFERENCES app.students(student_id);
+	
+	
+	
+2025-12-03 14:58:05.798 +08 [18700] ERROR:  constraint "students_student_id_fkey" for relation "students" already exists
+2025-12-03 14:58:05.798 +08 [18700] STATEMENT:  ALTER TABLE ONLY app.students
+	    ADD CONSTRAINT students_student_id_fkey FOREIGN KEY (student_id) REFERENCES app.users(user_id);
+	
+	
+	
+2025-12-03 14:59:15.613 +08 [7020] ERROR:  cannot drop the currently open database
+2025-12-03 14:59:15.613 +08 [7020] STATEMENT:  DROP DATABASE IF EXISTS testdb;
+2025-12-03 14:59:18.627 +08 [4080] LOG:  checkpoint complete: wrote 1005 buffers (6.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=109.883 s, sync=0.231 s, total=110.121 s; sync files=335, longest=0.002 s, average=0.001 s; distance=4707 kB, estimate=4707 kB; lsn=0/1A73470, redo lsn=0/1A4B518
+2025-12-03 15:01:20.195 +08 [4080] LOG:  checkpoint starting: immediate force wait
+2025-12-03 15:01:20.207 +08 [4080] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.004 s, total=0.013 s; sync files=4, longest=0.001 s, average=0.001 s; distance=163 kB, estimate=4253 kB; lsn=0/1A74470, redo lsn=0/1A74418
+2025-12-03 15:06:20.222 +08 [4080] LOG:  checkpoint starting: time
+2025-12-03 15:08:11.506 +08 [4080] LOG:  checkpoint complete: wrote 1018 buffers (6.2%); 1 WAL file(s) added, 0 removed, 0 recycled; write=110.809 s, sync=0.265 s, total=111.285 s; sync files=342, longest=0.028 s, average=0.001 s; distance=4831 kB, estimate=4831 kB; lsn=0/1F2C160, redo lsn=0/1F2C0D0
+2025-12-03 16:27:06.290 +08 [12324] LOG:  background worker "logical replication launcher" (PID 18908) was terminated by exception 0xC000013A
+2025-12-03 16:27:06.290 +08 [12324] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2025-12-03 16:27:06.290 +08 [12324] LOG:  terminating any other active server processes
+2025-12-03 16:27:06.302 +08 [12324] LOG:  all server processes terminated; reinitializing
+2025-12-03 16:27:06.351 +08 [17344] LOG:  database system was interrupted; last known up at 2025-12-03 15:08:11 +08

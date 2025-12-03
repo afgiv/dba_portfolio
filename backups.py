@@ -118,7 +118,7 @@ print("Date: " + today)
 daily_backup()
 
 # Run the globals backup during first day of the month (1)
-if datetime.datetime.now().day == 1:
+if datetime.datetime.now().day == 3:
     global_backup()
 
 # Delete the old backups if possible
