@@ -248,6 +248,7 @@ def admin_dashboard():
             return redirect(url_for('admin_dashboard'))
     return render_template('index.html', page="admin", form=form, dashboard="new_user")
 
+# Render the admin page for adding new course
 @app.route("/admin/new_course" , methods = ['GET', 'POST'])
 @login_required
 @admin_only
@@ -269,6 +270,7 @@ def new_course():
         return redirect(url_for('new_course'))
     return render_template('index.html', page="admin", form=form, dashboard="new_course")
 
+# Render the admin page for adding new enrollment
 @app.route("/admin/new_enrollment", methods = ['GET', 'POST'])
 @login_required
 @admin_only
