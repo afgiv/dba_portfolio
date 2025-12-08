@@ -2,6 +2,7 @@ import os, subprocess, datetime
 from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 
+# Load the .env file
 load_dotenv()
 
 # Terms: Daily backups - Database only, Global backups - Roles only
@@ -13,8 +14,14 @@ ADMIN = "admin" # The user account for global backups (SUPERUSER)
 DB_NAME = "university" # The database name
 
 # Configure the folder of the backups
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.abspath(os.path.join(__file__, "..")))
 BACKUP_DIR = os.path.join(BASE_DIR, "backups")
+
+
+# Use the .exe for the pg_dump and pg_dumpall
+# PG_DUMP = r"C:\Program Files\PostgreSQL\17\bin\pg_dump.exe"
+# PG_DUMPALL = r"C:\Program Files\PostgreSQL\17\bin\pg_dumpall.exe"
+
 
 # Days for how long the daily backups and global backups (monthly) are kept
 RETENTION_DAYS = 7
@@ -58,9 +65,9 @@ def daily_backup():
 
     print("Running pg_dump...")
     with open(base_file, "wb") as f:
-        result = subprocess.run(cmd, stdout=f, stderr=subprocess.PIPE, text=True)
+            result = subprocess.run(cmd, stdout=f, stderr=subprocess.PIPE, text=True)
     if result.returncode != 0:
-        print("Database backup FAILED!")
+        print("Daily backup FAILED!")
         print(result.stderr)
         exit(1)
 
