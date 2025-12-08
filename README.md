@@ -70,24 +70,25 @@ dba/
 │   ├── templates/             # HTML files
 │   └── static/                # Static Files
 │
-├── backups/                   # Actual backup encrypted files
+├── backups/                   # Encrypted backup files
 │
-├── backup_scripts/              
+├── backup_scripts/
 │   ├── backup.py              # logic for pg_dump + encryption
-│   ├── decrypt.py             # logic for decryption
+│   └── decrypt.py             # logic for decryption
 │
 ├── database-postgresql/
-│   ├── SQL/                  # SQL scripts for building roles, schemas, etc.  
-│   └── ERD/                  # ERD images
-│   └── DB Restore Test/      # DB restore test images using PowerShell
+│   ├── SQL/                   # SQL scripts for roles, schemas, grants
+│   ├── ERD/                   # ERD images
+│   └── DB Restore Test/       # DB restore test images using PowerShell
 │
 ├── migrations/                # From Flask-Migrate
 │
 ├── tests/                     # Test environment for database restoration
 │
-├── .env.example      
+├── .env.example
 ├── .gitignore
-├── requirements.txt
+└── requirements.txt
+
 
 
 🧪 Test Environment (Port 5333)
