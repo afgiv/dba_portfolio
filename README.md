@@ -3,6 +3,7 @@
 Backend + PostgreSQL DBA Portfolio Project
 
 This project is a simplified backend system that simulates how a real university information system works behind the scenes.
+
 It showcases Flask backend development, role-based authentication, and PostgreSQL database administration—including schemas, roles, permissions, migrations, and automated encrypted backups.
 
 The goal is to demonstrate practical backend + DBA skills similar to what a junior backend/DBA hybrid role would require.
@@ -61,33 +62,34 @@ Custom PostgreSQL roles:
 This project mimics how institutions separate data and responsibility across schemas and roles.
 Each role sees only the functionality they are allowed—both at the app layer and database layer.
 
-dba/
-├── app/
-│   ├── main.py                # Flask application
-│   ├── config.py              # Flask config
-│   ├── models.py              # SQLAlchemy ORM models
-│   ├── forms.py               # WTForms
-│   ├── templates/             # HTML files
-│   └── static/                # Static Files
-│
-├── backups/                   # Encrypted backup files
-│
-├── backup_scripts/
-│   ├── backup.py              # logic for pg_dump + encryption
-│   └── decrypt.py             # logic for decryption
-│
-├── database-postgresql/
-│   ├── SQL/                   # SQL scripts for roles, schemas, grants
-│   ├── ERD/                   # ERD images
-│   └── DB Restore Test/       # DB restore test images using PowerShell
-│
-├── migrations/                # From Flask-Migrate
-│
-├── tests/                     # Test environment for database restoration
-│
-├── .env.example
-├── .gitignore
-└── requirements.txt
+    dba/
+    ├── app/
+    │   ├── main.py                # Flask application
+    │   ├── config.py              # Flask config
+    │   ├── models.py              # SQLAlchemy ORM models
+    │   ├── forms.py               # WTForms
+    │   ├── templates/             # HTML files
+    │   └── static/                # Static Files
+    │
+    ├── backups/                   # Encrypted backup files
+    │
+    ├── backup_scripts/
+    │   ├── backup.py              # logic for pg_dump + encryption
+    │   └── decrypt.py             # logic for decryption
+    │
+    ├── database-postgresql/
+    │   ├── SQL/                   # SQL scripts for roles, schemas, grants
+    │   ├── ERD/                   # ERD images
+    │   └── DB Restore Test/       # DB restore test images using PowerShell
+    │
+    ├── migrations/                # From Flask-Migrate
+    │
+    ├── tests/                     # Test environment for database restoration
+    │
+    ├── .env.example
+    ├── .gitignore
+    └── requirements.txt
+
 
 
 
@@ -105,11 +107,11 @@ A dedicated PostgreSQL instance was set up for backup restore testing:
 The backup process is handled by a standalone Python script, which can be automated using Task Scheduler (Windows) or cron (Linux).
 The script performs:
 
-✔ Daily pg_dump (logical backup)
-✔ AES encryption
-✔ Timestamped file naming
-✔ Backup rotation (deletes old backups safely)
-✔ .pgpass support (no password prompts)
+    ✔ Daily pg_dump (logical backup)
+    ✔ AES encryption
+    ✔ Timestamped file naming
+    ✔ Backup rotation (deletes old backups safely)
+    ✔ .pgpass support (no password prompts)
 
 This setup protects backups at rest and avoids storage overflow—similar to a real DBA environment.
 
@@ -131,8 +133,8 @@ This completes the full backup → encryption → decryption → restore workflo
 
 I built this system to demonstrate BOTH:
 
-✔ Backend Development Skills
-✔ Database Administration Skills
+    ✔ Backend Development Skills
+    ✔ Database Administration Skills
 
 Many junior roles require a mix of API, database, and system maintenance skills.
 
@@ -147,8 +149,8 @@ This project shows the ability to:
 
 📌 Project Status
 
-✅ Backend complete
-✅ RBAC implemented
-✅ Schemas and permissions configured
-✅ Logical backup automation done
-✅ Encrypted backup + decryption script added
+    ✅ Backend complete
+    ✅ RBAC implemented
+    ✅ Schemas and permissions configured
+    ✅ Logical backup automation done
+    ✅ Encrypted backup + decryption script added
